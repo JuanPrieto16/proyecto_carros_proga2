@@ -1,6 +1,6 @@
 # %% [markdown]
-# # Título del proyecto
-# Integrantes: Nombre A, Nombre B
+# # Análisis base de datos sobre carros
+# Integrantes: Juan David Prieto, Samuel Andres Betancourt
 
 # %%
 import pandas as pd
@@ -8,10 +8,28 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-df = pd.read_csv("datos/archivo_kaggle.csv")
-
+df = pd.read_csv("datos/data.csv")
 # %% [markdown]
-# ## 1. Carga e inspección inicial de los datos  (Integrante A)
+# ## 1. Carga e inspección inicial de los datos  (Juan David)
+# %%
+print("Filas y columnas:", df.shape)
+# %%
+df.head()
+# %%
+df.info()
+# %%
+df.nunique()
+# %%
+df.describe()
+# %%
+df.describe(exclude="number")
+# %% [markdown]
+# Clasificación de variables:
+# - Categóricas (8): Make, Model, Engine Fuel Type, Transmission Type, Driven_Wheels, Market Category, Vehicle Size, Vehicle Style
+# - Numéricas continuas (4): Engine HP, highway MPG, city mpg, MSRP
+# - Numéricas discretas (4): Year, Engine Cylinders, Number of Doors, Popularity
+
+# Conclusión: el conjunto tiene 11.914 registros y 16 variables. Cada fila es una versión de un modelo de carro con sus características y su precio (MSRP). Hay datos faltantes en Engine HP, Engine Cylinders, Number of Doors, Engine Fuel Type y sobre todo en Market Category. El precio promedio (40.595) es mayor que la mediana (29.995), lo que indica que unos pocos carros muy caros inflan el promedio. También hay valores raros, como highway MPG de 354 y cilindros en 0, que se revisan en el ítem 3.
 
 # %% [markdown]
 # ## 2. Manejo de datos faltantes  (Integrante B)

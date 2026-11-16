@@ -71,7 +71,7 @@ df[df["highway MPG"] > 100][["Make", "Model", "Year", "Engine Fuel Type", "highw
 # ## 4. Valores inconsistentes y duplicados  (Integrante B)
 
 # %% [markdown]
-# ## 5. Creación de variables  (Integrante A)
+# ## 5. Creación de variables  (Juan David)
 # %%
 df["Avg MPG"] = (df["highway MPG"] + df["city mpg"]) / 2
 df[["highway MPG", "city mpg", "Avg MPG"]].head()
@@ -94,8 +94,36 @@ df["Price Category"].value_counts()
 # ## 6. Filtrado y condiciones en pandas  (Integrante B)
 
 # %% [markdown]
-# ## 7. Agrupación con groupby  (Integrante A)
+# ## 7. Agrupación con groupby  (juan david)
+# %%
+df.groupby("Make")["MSRP"].mean().sort_values(ascending=False).head(10)
 
+# %% [markdown]
+#las marcas más caras en promedio son Bugatti, Maybach y Rolls-Royce. Todas son marcas de lujo y superdeportivos, lo que confirma que los outliers de precio son reales.
+
+# %%
+df.groupby("Year")["MSRP"].median()
+
+# %% [markdown]
+#de 2001 a 2017 la mediana del precio sube de forma casi constante. Entre 1990 y 1996 la mediana es exactamente 2.000 USD, lo que parece un valor por defecto y no un precio real.
+
+# %%
+df.groupby("Driven_Wheels")[["Engine HP", "Avg MPG", "MSRP"]].mean()
+
+# %% [markdown]
+#los carros de tracción trasera tienen más potencia y los de tracción delantera son los más eficientes y los más baratos. Los de tracción total y trasera son los más caros.
+
+# %%
+df.groupby("Engine Fuel Type")["MSRP"].agg(["count", "mean"]).sort_values("count", ascending=False)
+
+# %% [markdown]
+#la gasolina regular domina el conjunto (7.172 carros) y es la más barata en promedio (cerca de 23 mil USD). Los que exigen gasolina premium tienen un precio promedio mucho mayor (cerca de 101 mil USD), porque ahi estan los carros de lujo y deportivos.
+
+# %%
+df.groupby("Price Category", observed=True)[["Engine HP", "Avg MPG", "Car Age"]].mean()
+
+# %% [markdown]
+#a mayor categoría de precio, mayor potencia, en cambio el consumo empeora en Lujo. La categoría Económico tiene la antigüedad promedio más alta, lo que muestra que los carros baratos del conjunto son viejos.
 # %% [markdown]
 # ## 8. Visualizaciones  (Integrante B)
 

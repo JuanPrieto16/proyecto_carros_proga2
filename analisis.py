@@ -72,7 +72,24 @@ df[df["highway MPG"] > 100][["Make", "Model", "Year", "Engine Fuel Type", "highw
 
 # %% [markdown]
 # ## 5. Creación de variables  (Integrante A)
+# %%
+df["Avg MPG"] = (df["highway MPG"] + df["city mpg"]) / 2
+df[["highway MPG", "city mpg", "Avg MPG"]].head()
 
+# %%
+df["Car Age"] = df["Year"].max() - df["Year"]
+df[["Year", "Car Age"]].head()
+
+# %%
+df["Price Category"] = pd.cut(
+    df["MSRP"],
+    bins=[0, 20000, 40000, 80000, df["MSRP"].max()],
+    labels=["Económico", "Medio", "Alto", "Lujo"]
+)
+df["Price Category"].value_counts()
+
+# %% [markdown]
+# Conclusión: se crearon tres variables nuevas. Avg MPG resume el consumo en un solo valor (promedio de ciudad y carretera). Car Age indica la antigüedad del carro respecto al año más reciente del dataset (2017). Price Category agrupa el precio (MSRP) en cuatro categorías: Económico (hasta 20.000 USD), Medio (20.000 a 40.000), Alto (40.000 a 80.000) y Lujo (más de 80.000). La categoría más común es Medio (alrededor del 49 % de los carros) y la menos común es Lujo (alrededor del 7,5 %), lo que muestra que la mayoría de los carros se concentra en precios medios.
 # %% [markdown]
 # ## 6. Filtrado y condiciones en pandas  (Integrante B)
 
@@ -84,4 +101,3 @@ df[df["highway MPG"] > 100][["Make", "Model", "Year", "Engine Fuel Type", "highw
 
 # %% [markdown]
 # ## 9. Conclusiones finales  (Integrante A)
-```[cite: 1]

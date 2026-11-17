@@ -34,6 +34,45 @@ df.describe(exclude="number")
 # %% [markdown]
 # ## 2. Manejo de datos faltantes  (Integrante B)
 
+# %%
+missing_df = pd.DataFrame({
+    'Valores Nulos': df.isnull().sum(),
+    'Porcentaje (%)': (df.isnull().sum() / len(df)) * 100
+})
+
+
+print(missing_df[missing_df['Valores Nulos'] > 0].sort_values(by='Porcentaje (%)', ascending=False))
+
+# %%
+
+plt.figure(figsize=(12, 6))
+sns.heatmap(df.isnull(), cbar=False, cmap='viridis', yticklabels=False)
+plt.title('Mapa de Calor General de Valores Nulos en Car Features')
+plt.xlabel('Columnas del Dataset')
+plt.show()
+
+# %%
+if 'Engine HP' in df.columns:
+    mediana_hp = df['Engine HP'].median()
+    df['Engine HP'] = df['Engine HP'].fillna(mediana_hp)
+
+
+if 'Engine Cylinders' in df.columns:
+    moda_cilindros = df['Engine Cylinders'].mode()[0]
+    df['Engine Cylinders'] = df['Engine Cylinders'].fillna(moda_cilindros)
+
+df.loc[:,['Engine HP','Engine Cylinders']]
+
+# %%
+
+if 'MSRP' in df.columns:
+    filas_iniciales = len(df)
+    df.dropna(subset=['MSRP'], inplace=True)
+
+df['MSRP']
+# %% [markdown]
+# Conclusión: Market Category faltan 3.742 datos , ya que muchos vehículos normales o antiguos no pertenecen a ninguna categoría especial; en lugar de eliminar casi una gran parte  del dataset, se imputan como "None". En Engine HP 69 nulos y Engine Cylinders 30 nulos, , el porcentaje faltante es mínimo y sin patrones marcados en los mapas de calor, por lo que se imputan con la mediana y la moda respectivamente para conservar todos los registros sin sesgar el análisis.
+
 # %% [markdown]
 # ##3. Manejo de outliers (Juan David)
 # %%

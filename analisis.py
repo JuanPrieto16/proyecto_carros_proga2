@@ -32,7 +32,7 @@ df.describe(exclude="number")
 # Conclusión: el conjunto tiene 11.914 registros y 16 variables. Cada fila es una versión de un modelo de carro con sus características y su precio (MSRP). Hay datos faltantes en Engine HP, Engine Cylinders, Number of Doors, Engine Fuel Type y sobre todo en Market Category. El precio promedio (40.595) es mayor que la mediana (29.995), lo que indica que unos pocos carros muy caros inflan el promedio. También hay valores raros, como highway MPG de 354 y cilindros en 0, que se revisan en el ítem 3.
 
 # %% [markdown]
-# ## 2. Manejo de datos faltantes  (Integrante B)
+# ## 2. Manejo de datos faltantes  (Samuel Andres)
 
 # %%
 missing_df = pd.DataFrame({
@@ -74,7 +74,7 @@ df['MSRP']
 # Conclusión: Market Category faltan 3.742 datos , ya que muchos vehículos normales o antiguos no pertenecen a ninguna categoría especial; en lugar de eliminar casi una gran parte  del dataset, se imputan como "None". En Engine HP 69 nulos y Engine Cylinders 30 nulos, , el porcentaje faltante es mínimo y sin patrones marcados en los mapas de calor, por lo que se imputan con la mediana y la moda respectivamente para conservar todos los registros sin sesgar el análisis.
 
 # %% [markdown]
-# ##3. Manejo de outliers (Juan David)
+# ## 3. Manejo de outliers (Juan David)
 # %%
 plt.figure(figsize=(8, 4))
 sns.boxplot(x=df["MSRP"])
@@ -107,7 +107,7 @@ df[df["highway MPG"] > 100][["Make", "Model", "Year", "Engine Fuel Type", "highw
 # Conclusión: en MSRP hay 996 outliers (8,36 %) por encima de 74.078 USD. Corresponden a carros de lujo y superdeportivos con precios reales, por lo que no se eliminan. Engine HP también tiene valores altos (hasta 1000 HP) que son superdeportivos reales. En highway MPG y city mpg los valores muy altos (hasta 354) corresponden a carros eléctricos, que se miden en MPGe y no son comparables con los de gasolina. Se conservan, pero al analizar el consumo conviene separar los eléctricos.
 
 # %% [markdown]
-# ## 4. Valores inconsistentes y duplicados  (Integrante B)
+# ## 4. Valores inconsistentes y duplicados  (Samuel Andres)
 # %%
 
 duplicados_totales = df.duplicated().sum()
@@ -153,8 +153,49 @@ df["Price Category"].value_counts()
 # %% [markdown]
 # Conclusión: se crearon tres variables nuevas. Avg MPG resume el consumo en un solo valor (promedio de ciudad y carretera). Car Age indica la antigüedad del carro respecto al año más reciente del dataset (2017). Price Category agrupa el precio (MSRP) en cuatro categorías: Económico (hasta 20.000 USD), Medio (20.000 a 40.000), Alto (40.000 a 80.000) y Lujo (más de 80.000). La categoría más común es Medio (alrededor del 49 % de los carros) y la menos común es Lujo (alrededor del 7,5 %), lo que muestra que la mayoría de los carros se concentra en precios medios.
 # %% [markdown]
-# ## 6. Filtrado y condiciones en pandas  (Integrante B)
+# ## 6. Filtrado y condiciones en pandas  (Samuel Andres)
 
+
+# %%
+top_marcas = df.groupby('Make')['MSRP'].mean().sort_values(ascending=False).head(5)
+print(f"Marcas más caras en promedio:  {top_marcas.round(2)}")
+# %% [markdown]
+# Marcas como Bugatti, Maybach y Lamborghini tienen los precios más elevados por su exclusividad, lujo y calidad, ya que están dirigidas a un público con alto poder adquisitivo.
+
+# %% 
+ultra_hp = df[df['Engine HP'] > 500]
+print(f"Cantidad de autos con más de 500 HP: {len(ultra_hp)}")
+print(ultra_hp[['Make', 'Model', 'Engine HP', 'MSRP']])
+# %% [markdown]
+# Los autos que superan los 500 HP suelen ser deportivos de lujo, diseñados para ofrecer mucha potencia y velocidad. Por eso, generalmente tienen precios bastante altos.
+
+# %%
+electricos = df[df['Engine Cylinders'] == 0]
+print(f" Total de vehículos con 0 cilindros: {len(electricos)}")
+if len(electricos) > 0:
+    print(electricos[['Make', 'Model', 'MSRP']])
+
+# %% [markdown]
+# Este filtro permite identificar principalmente los autos eléctricos, que funcionan sin un motor de combustión tradicional y muestran cómo está cambiando la industria automotriz.
+
+# %%
+familiares_accesibles = df[(df['Number of Doors'] == 4) & (df['Year'] >= 2015) & (df['MSRP'] < 25000)]
+print(f"Cantidad de autos familiares modernos y accesibles: {len(familiares_accesibles)}")
+print(familiares_accesibles[['Make', 'Model', 'Year', 'MSRP']])
+
+
+
+# %% [markdown]
+# Hay una buena variedad de vehículos de 4 puertas, modelos recientes y precios menores a $ 25.000. Esto demuestra que existen opciones prácticas y económicas para las familias.
+
+# %%
+
+deportivos_accesibles = df[(df['Number of Doors'] == 2) & (df['MSRP'] < 25000)]
+print(f"Cantidad de autos deportivos de 2 puertas por menos de $25,000: {len(deportivos_accesibles)}")
+print(deportivos_accesibles[['Make', 'Model', 'Year', 'MSRP']])
+
+# %% [markdown]
+# Aunque muchos autos de dos puertas son costosos, también existen modelos deportivos y compactos por menos de $25.000, pensados para personas que buscan un diseño más deportivo sin gastar tanto.
 # %% [markdown]
 # ## 7. Agrupación con groupby  (juan david)
 # %%

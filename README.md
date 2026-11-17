@@ -36,11 +36,15 @@ Número de registros : 11,914
 | `MSRP` | Numérica continua | Precio de venta sugerido por el fabricante o variable objetivo. | Dólares estadounidenses USD |
 
 ## Organización del repositorio
+`analisis.py`: solución final del proyecto, dividida en celdas con sus conclusiones.
 
+`cuadernos/`: cuadernos de exploración de cada integrante (`exploracion_juan.ipynb` y `exploracion_samuel.ipynb`).
+
+`datos/`: base de datos descargada de Kaggle (`data.csv`).
 
 ## Conclusiones
-1. 
-2. 
-3. 
-4. 
-5.
+1. El conjunto tiene 11.914 registros y 16 variables (8 categóricas, 4 numéricas continuas y 4 discretas). Los datos faltantes se concentran en Market Category (3.742); en Engine HP (69) y Engine Cylinders (30) son pocos y se imputaron con la mediana y la moda. Además se eliminaron los registros duplicados y se estandarizó el texto para evitar categorías repetidas.
+2. Los filtros muestran que las marcas más caras son de lujo (Bugatti, Maybach, Rolls-Royce) y que los autos con más de 500 HP son deportivos de alto precio. Aun así, hay opciones accesibles: carros familiares de 4 puertas, recientes y por menos de 25.000 USD.
+3. El precio está sesgado por los carros de lujo: el promedio (cerca de 40.600 USD) supera con claridad a la mediana (cerca de 29.995 USD). Hay 996 outliers (8,36 %) sobre 74.078 USD, pero son precios reales, por eso se conservaron.
+4. El tipo de combustible se relaciona con el precio: la gasolina regular domina el conjunto y es la más barata en promedio (cerca de 23 mil USD), mientras que los carros que exigen gasolina premium tienen un precio promedio mucho mayor (cerca de 100 mil USD), porque ahí están los deportivos y de lujo. Los eléctricos son muy pocos, por lo que su peso en el análisis es pequeño.
+5. Con las variables creadas se vio que a mayor categoría de precio hay más potencia (de cerca de 155 HP en Económico a cerca de 496 HP en Lujo) y peor consumo. La tracción delantera es la más eficiente y barata, y la trasera la más potente y cara. El precio mediano sube con los años desde 2001, y los eléctricos tienen MPG no comparables con los de gasolina, por lo que conviene analizarlos aparte.

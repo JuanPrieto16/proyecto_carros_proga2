@@ -108,7 +108,30 @@ df[df["highway MPG"] > 100][["Make", "Model", "Year", "Engine Fuel Type", "highw
 
 # %% [markdown]
 # ## 4. Valores inconsistentes y duplicados  (Integrante B)
+# %%
 
+duplicados_totales = df.duplicated().sum()
+print(f"Número de filas duplicadas encontradas: {duplicados_totales}")
+
+# %%
+df = df.drop_duplicates().reset_index(drop=True)
+
+# %%
+
+columnas_texto = df.select_dtypes(include=['object']).columns
+
+for col in columnas_texto:
+   
+    df[col] = df[col].astype(str).str.strip().str.title()
+    
+    
+    df[col] = df[col].replace(['Nan', 'None', 'Na'], np.nan)
+# %%
+print("Valores únicos antes de corregir en Transmission Type:")
+print(df['Transmission Type'].value_counts())
+
+#%% [markdown]
+# Conclusión: La eliminación de registros duplicados evita sesgos por redundancia en el dataset, mientras que la estandarización de los campos de texto garantiza que categorías como las marcas o los tipos de transmisión no se fragmenten en múltiples entradas artificiales, asegurando la consistencia y seguridad para el análisis posterior.
 # %% [markdown]
 # ## 5. Creación de variables  (Integrante A)
 

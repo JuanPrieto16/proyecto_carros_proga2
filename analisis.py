@@ -231,4 +231,16 @@ df.groupby("Price Category", observed=True)[["Engine HP", "Avg MPG", "Car Age"]]
 # ## 8. Visualizaciones  (Integrante B)
 
 # %% [markdown]
-# ## 9. Conclusiones finales  (Integrante A)
+# ## 9. Conclusiones finales  (Juan David)
+# %% [markdown]
+# **Conclusiones finales**
+#
+# 1. **Precios muy sesgados por los carros de lujo.** El precio promedio (cerca de 40.600 USD) es mucho mayor que la mediana (cerca de 29.995 USD). Hay 996 outliers (8,36 %) sobre 74.078 USD, que corresponden a marcas como Bugatti, Maybach y Rolls-Royce. Son precios reales, por eso no se eliminaron.
+#
+# 2. **La potencia está muy ligada al precio.** Al subir de categoría de precio, la potencia promedio pasa de cerca de 155 HP (Económico) a cerca de 496 HP (Lujo). Los autos de más de 500 HP son deportivos y de lujo, y los que exigen gasolina premium tienen un precio promedio (cerca de 101 mil USD) mucho mayor que los de gasolina regular (cerca de 23 mil USD).
+#
+# 3. **Hay un balance entre potencia y eficiencia.** Los carros de tracción delantera son los más eficientes (cerca de 27,6 MPG) y baratos (cerca de 23 mil USD), mientras que los de tracción trasera tienen más potencia (cerca de 303 HP) y son más caros. La categoría Lujo es la que peor consumo tiene (cerca de 17,8 MPG).
+#
+# 4. **El precio ha subido con el tiempo, pero los datos antiguos no son confiables.** De 2001 a 2017 la mediana del precio sube de cerca de 22.800 a cerca de 36.600 USD. Entre 1990 y 1996 la mediana es exactamente 2.000 USD, lo que parece un valor por defecto y no un precio real.
+#
+# 5. **Los carros eléctricos distorsionan el análisis del consumo.** Hay pocos (66 con combustible eléctrico), tienen 0 cilindros y valores de MPG de hasta 354, porque se miden en MPGe y no son comparables con los de gasolina. Para comparar eficiencia conviene analizarlos por separado. Aun así, existen opciones accesibles: hay buena variedad de carros de 4 puertas, modelos recientes y menos de 25.000 USD.

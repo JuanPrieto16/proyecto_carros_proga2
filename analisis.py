@@ -230,6 +230,74 @@ df.groupby("Price Category", observed=True)[["Engine HP", "Avg MPG", "Car Age"]]
 # %% [markdown]
 # ## 8. Visualizaciones  (Integrante B)
 
+# %%
+sns.set_theme(style="whitegrid")
+
+plt.figure(figsize=(10, 5))
+sns.histplot(df[df['MSRP'] <= 150000]['MSRP'], bins=40, kde=True, color='royalblue')
+plt.title('1. Distribución de Precios (MSRP <= $150,000)')
+plt.xlabel('Precio (USD)')
+plt.ylabel('Frecuencia')
+plt.show()
+
+# %% [markdown]
+# La mayoría de los vehículos tienen precios entre $20.000 y $45.000 dólares pero  también hay algunos autos de lujo con precios mucho más altos, aunque son menos comunes.
+
+
+
+# %%
+plt.figure(figsize=(10, 5))
+sns.scatterplot(data=df, x='Engine HP', y='MSRP', alpha=0.5, color='crimson')
+plt.title('2. Potencia del Motor (HP) vs. Precio (MSRP)')
+plt.xlabel('Caballos de Fuerza (HP)')
+plt.ylabel('Precio (USD)')
+
+
+# %% [markdown]
+# Se observa que, en general, mientras más potencia tiene un vehículo, más alto es su precio. Esto se nota especialmente en los autos que superan los 400 HP.
+
+
+# %%
+plt.figure(figsize=(10, 5))
+top_10_marcas = df['Make'].value_counts().head(10)
+sns.barplot(x=top_10_marcas.values, y=top_10_marcas.index, hue=top_10_marcas.index, palette='viridis', legend=False)
+plt.title('3. Top 10 Marcas con Mayor Presencia en el Dataset')
+plt.xlabel('Cantidad de Vehículos')
+plt.ylabel('Marca')
+plt.show()
+
+
+# %% [markdown]
+# Chevrolet, Ford y Volkswagen son algunas de las marcas con mayor cantidad de vehículos en los datos. Esto muestra que las marcas más comerciales tienen una mayor presencia que las marcas de lujo.
+
+
+# %%
+plt.figure(figsize=(10, 5))
+sns.boxplot(data=df[df['highway MPG'] < 60], x='Transmission Type', y='highway MPG', hue='Transmission Type', palette='Set2', legend=False)
+plt.title('4. Rendimiento en Carretera por Tipo de Transmisión')
+plt.xlabel('Tipo de Transmisión')
+plt.ylabel('MPG en Carretera')
+plt.xticks(rotation=25)
+plt.show()
+
+
+
+# %% [markdown]
+# Los autos eléctricos e híbridos con transmisión directa muestran un mejor rendimiento energético. Por otro lado, los vehículos automáticos y manuales tienen resultados bastante parecidos.
+
+
+# %%
+plt.figure(figsize=(10, 6))
+cols_numericas = ['Year', 'Engine HP', 'Engine Cylinders', 'highway MPG', 'city mpg', 'Popularity', 'MSRP']
+corr = df[cols_numericas].corr()
+sns.heatmap(corr, annot=True, cmap='coolwarm', fmt=".2f", linewidths=0.5)
+plt.title('5. Matriz de Correlación de Variables Numéricas')
+plt.show()
+
+
+# %% [markdown]
+# Se observa que los autos con más caballos de fuerza suelen tener más cilindros. También hay una relación entre el consumo en ciudad y carretera. Además, los vehículos más potentes tienden a gastar más combustible.
+
 # %% [markdown]
 # ## 9. Conclusiones finales  (Juan David)
 # %% [markdown]

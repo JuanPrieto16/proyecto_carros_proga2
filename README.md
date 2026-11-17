@@ -43,5 +43,4 @@ Número de registros : 11,914
 2. 
 3. 
 4. 
-5. 
->>>>>>> rama-samuel
+5.
